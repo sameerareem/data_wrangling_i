@@ -1,2 +1,5 @@
 # data_wrangling_i
-for P8105
+
+Sameera Reem Imthiaz
+
+This is code from in class for data wrangling.
