@@ -8,6 +8,7 @@ This file is for doing data import.
 ```{r}
 library(tidyverse)
 library(readxl)
+library(haven)
 ```
 
 Import our first dataset
@@ -88,6 +89,31 @@ tt_df =
 
 tt_df
 ```
+
+## Import SAS
+
+Use package haven for this.
+
+Read PULSE dataset
+
+```{r}
+pulse_df =
+  read_sas("data/public_pulse_data.sas7bdat")
+
+pulse_df = janitor::clean_names(pulse_df)
+```
+
+whats bad about read.csv
+
+import pups with read.csv
+
+```{r}
+pups_df_base = 
+  read.csv("data/FAS_pups.csv")
+
+pups_df_base
+```
+
 
 
 
