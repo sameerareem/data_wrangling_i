@@ -13,7 +13,9 @@ Import our first dataset
 
 ```{r}
 litters_df = 
-  read_csv(file = "data/FAS_litters.csv")
+  read_csv(file = "data/FAS_litters.csv",
+           na = c("", "NA", ".") ## by default, na includes missing and NA values, but this particular dataset has "." as a missing value.
+           )
 
 litters_df = janitor::clean_names(litters_df)
 ```
@@ -22,7 +24,10 @@ Import our second dataset.
 
 ```{r}
 pups_df = 
-  read_csv(file = "data/FAS_pups.csv", skip = 3) ##skip=3 to skip first 3 rows in csv file w no data
+  read_csv(file = "data/FAS_pups.csv", 
+           skip = 3, ##skip=3 to skip first 3 rows in csv file w no data
+           na = c("", "NA", ".")
+           ) 
 
 pups_df = janitor::clean_names(pups_df)
 ```
@@ -47,6 +52,8 @@ Skimming
 ```{r}
 skimr::skim(pups_df)
 ```
+
+
 
 
 
