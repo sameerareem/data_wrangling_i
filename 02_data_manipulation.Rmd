@@ -1,0 +1,125 @@
+---
+title: "Data Import"
+output: github_document
+---
+
+This file is for doing data manipulation.
+
+```{r}
+library(tidyverse)
+```
+
+Load the litters and pups dataset
+
+```{r}
+litters_df =
+  read_csv(
+    "data/FAS_litters.csv",
+    na = c("", "NA", ".")
+  )
+
+litters_df = janitor::clean_names(litters_df)
+
+pups_df =
+  read_csv(
+    "data/FAS_pups.csv",
+    skip = 3,
+    na = c("", "NA", ".")
+  )
+
+pups_df = janitor::clean_names(pups_df)
+```
+
+## 'select' some variables
+
+```{r}
+select(litters_df, group, litter_number)
+
+select(litters_df, group:gd_of_birth)
+
+select(litters_df, -group)
+
+select(litters_df, starts_with("gd"))
+
+select(litters_df, starts_with("gd"), group)
+
+select(litters_df, GROUP = group, everything()) ##renamed just group, kept everything else the same
+
+select(litters_df, -starts_with("gd"))
+```
+
+A couple of alternatives
+
+```{r}
+rename(litters_df, GROUP = group)
+
+relocate(litters_df, litter_number, gd0_weight) ##moves litter number & gd0 weight to first
+```
+
+
+In the pups data, select litter number, sex and pd ears
+
+```{r}
+select(pups_df, litter_number, sex, pd_ears)
+```
+
+## 'filter' some rows
+
+```{r}
+filter(litters_df, gd_of_birth == 19)
+
+filter(litters_df, pups_born_alive <= 5)
+
+filter(litters_df, pups_born_alive != 6)
+
+filter(litters_df, group %in% c("Con7", "Con8"))
+
+filter(litters_df, group %in% c("Con7", "Con8"), pups_born_alive < 7)
+
+filter(litters_df, pups_born_alive < 4 | pups_born_alive > 8) #or
+
+drop_na(litters_df, gd0_weight)
+```
+
+In the pups df, keep pd walk > 11 and sex is 2
+
+```{r}
+filter(pups_df, pd_walk < 11, sex == 2)
+```
+
+## 'mutate' to change some columns
+
+```{r}
+mutate(
+  litters_df, 
+  wt_gain = gd18_weight - gd0_weight,
+  wt_gain_sq = wt_gain ^ 2,
+  group = str_to_lower(group)) ##changes to lower case
+```
+
+In pups dataset, create a column that subtracts 7 from pd_walk
+
+```{r}
+mutate(pups_df, pd_walk_minus7 = pd_walk - 7)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
