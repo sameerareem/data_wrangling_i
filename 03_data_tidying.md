@@ -72,3 +72,30 @@ litters_df = read_csv("data/FAS_litters.csv") |>
     ## Caused by warning:
     ## ! `case_match()` was deprecated in dplyr 1.2.0.
     ## ℹ Please use `recode_values()` instead.
+
+## Deliberately untidy data
+
+``` r
+analysis_df = 
+  tibble(
+    groups = c("treatment","treatment","placebo","placebo"),
+    time = c("pre","post","pre","post"),
+    mean_outcome = c(4, 8, 3.5, 4.6)
+  )
+```
+
+untidying for human readability
+
+``` r
+analysis_df |> 
+  pivot_wider(
+    names_from = time, 
+    values_from = mean_outcome
+  ) |> 
+  knitr::kable() #to format data
+```
+
+| groups    | pre | post |
+|:----------|----:|-----:|
+| treatment | 4.0 |  8.0 |
+| placebo   | 3.5 |  4.6 |
