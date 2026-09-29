@@ -99,3 +99,35 @@ analysis_df |>
 |:----------|----:|-----:|
 | treatment | 4.0 |  8.0 |
 | placebo   | 3.5 |  4.6 |
+
+## bind some rows
+
+import lotr movie table
+
+``` r
+fellowship_df = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "B3:D6") |> 
+  mutate(movie = "fellowship")
+
+two_towers_df = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "F3:H6") |> 
+  mutate(movie = "two towers")
+
+return_df = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "J3:L6") |> 
+  mutate(movie = "return of the king")
+```
+
+next put all of these together and tidy
+
+``` r
+lotr_df = 
+  bind_rows(fellowship_df, two_towers_df, return_df) |> 
+  janitor::clean_names() |> 
+  relocate(movie) |> 
+  pivot_longer(
+    female:male,
+    names_to = "gender",
+    values_to = "words"
+  )
+```
